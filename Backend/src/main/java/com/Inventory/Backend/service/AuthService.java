@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.Inventory.Backend.dto.LoginResponse;
 import com.Inventory.Backend.dto.RegisterRequest;
 import com.Inventory.Backend.entity.Role;
 import com.Inventory.Backend.entity.User;
@@ -47,7 +48,7 @@ public class AuthService {
         return "User Registered Successfully";
     }
 
-    public String login(String username, String password) {
+    public LoginResponse login(String username, String password) {
         logger.debug("Authenticating user: {}", username);
         
         User user = userRepository.findByUsername(username)
@@ -63,7 +64,17 @@ public class AuthService {
 
         String token = jwtService.generateToken(username);
         logger.info("User authenticated successfully: {}", username);
-        return token;
+        
+        LoginResponse response = LoginResponse.builder()
+                .token(token)
+                .userId(user.getUserId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .build();
+        
+        logger.debug("Returning login response for user: {} with role: {}", username, user.getRole());
+        return response;
     }
 
 }

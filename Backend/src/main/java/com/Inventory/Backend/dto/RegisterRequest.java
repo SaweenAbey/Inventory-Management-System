@@ -27,5 +27,4 @@ public class RegisterRequest {
     private String imageUrl;
 
     private Role role; // Optional - will default to USER if not provided
-
 }

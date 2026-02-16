@@ -14,11 +14,11 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findByUser(User user);
 
-    List<Order> findByUserId(Long userId);
+    List<Order> findByUser_UserId(Long userId);
 
     List<Order> findByStatus(OrderStatus status);
 
     List<Order> findByUserAndStatus(User user, OrderStatus status);
 
-    List<Order> findByInventoryItemId(Long itemId);
+    List<Order> findByInventoryItem_ItemId(Long itemId);
 }
